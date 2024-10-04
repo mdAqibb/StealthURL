@@ -1,30 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <title>StealthURL</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>URL Shortener</h1>
-    
-    <form method="POST" action="/">
-        <label for="original_url">Original URL:</label>
-        <input type="text" id="original_url" name="original_url" required>
-        
-        <label for="custom_url">Custom Short URL (optional):</label>
-        <input type="text" id="custom_url" name="custom_url">
-        
-        <button type="submit">Shorten URL</button>
-    </form>
+    <div class="container">
+        <h1>StealthURL</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="original_url"><strong>Original URL</strong></label>
+                <input type="url" id="original_url" name="original_url" required 
+                       placeholder="https://example.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="custom_path"><strong>Custom Path (optional)</strong></label>
+                <input type="text" id="custom_path" name="custom_path" 
+                       placeholder="my-custom-url">
+            </div>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-        </ul>
-    
+            <div class="form-group">
+                <label for="custom_title"><strong>Custom Title (optional)</strong></label>
+                <input type="text" id="custom_title" name="custom_title" 
+                       placeholder="My Custom Page Title">
+            </div>
+            <!--
+            <div class="form-group">
+                <label for="custom_favicon"><strong>Custom Favicon URL (optional)</strong></label>
+                <input type="url" id="custom_favicon" name="custom_favicon" 
+                       placeholder="https://example.com/favicon.ico">
+            </div>
+            -->
+            <div class="checkbox-group">
+                <input type="checkbox" id="password_protected" name="password_protected">
+                <label for="password_protected">Password Protected</label>
+            </div>
+
+            <div class="form-group" id="password_field" style="display: none;">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" 
+                       placeholder="Enter your password">
+            </div>
+
+            <button type="submit">Shorten URL</button>
+        </form>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        {% if shortened_url %}
+        <div class="success-url">
+            <p>Your shortened URL:</p>
+            <a href="{{ shortened_url }}" target="_blank">{{ shortened_url }}</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('password_protected').addEventListener('change', function() {
+            document.getElementById('password_field').style.display = 
+                this.checked ? 'block' : 'none';
+        });
+    </script>
 </body>
 </html>
