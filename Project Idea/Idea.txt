@@ -7,10 +7,3 @@ URL shortener
 5.  No Screenshots/Recording
 6.  URL shortener   
 
-Pending
-    screenshots, screenrecording
-    favicon
-    url title
-    multipage visit on proxied website
-    cleaner fonts and stylesheet
-    
